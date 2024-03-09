@@ -1,0 +1,53 @@
+// This example renders a png file that is stored in a FLASH array
+// using the PNGdec library (available via library manager).
+
+// Image files can be converted to arrays using the tool here:
+// https://notisrac.github.io/FileToCArray/
+// To use this tool:
+//   1. Drag and drop file on "Browse..." button
+//   2. Tick box "Treat as binary"
+//   3. Click "Convert"
+//   4. Click "Save as file" and move the header file to sketch folder
+//   5. Open the sketch in IDE
+//   6. Include the header file containing the array (panda.h in this example)
+// checkout this example unsaun pag flash png file sa tft lcd C:\Users\LENOVO \Documents\Arduino\libraries\TFT_eSPI\examples\PNG Images\Flash_PNG
+
+int currentLogo = 1;
+unsigned long previousTime = 0;
+const unsigned long logoInterval = 2000;  // interval ni sa logo bali after 2 seconds mo change siya
+
+void idle() {
+  unsigned long currentTime = millis();
+  if (currentTime - previousTime >= logoInterval) {
+    previousTime = currentTime;
+    switch (currentLogo) {
+      case 1:{
+        int16_t wlc = png.openFLASH((uint8_t *)wlc240, sizeof(wlc240), pngDraw);
+        if (wlc == PNG_SUCCESS) {
+          tft.startWrite();
+          wlc = png.decode(NULL, 0);
+        }
+        currentLogo = 2; 
+        break;
+      }
+      case 2:{
+        int16_t cicte = png.openFLASH((uint8_t *)cicte240, sizeof(cicte240), pngDraw);
+        if (cicte == PNG_SUCCESS) {
+          tft.startWrite();
+          cicte = png.decode(NULL, 0);
+        }
+        currentLogo = 3; 
+        break;
+      }
+      case 3:{
+        int16_t aces = png.openFLASH((uint8_t *)aces240, sizeof(aces240), pngDraw);
+        if (aces == PNG_SUCCESS) {
+          tft.startWrite();
+          aces = png.decode(NULL, 0);
+        }
+        currentLogo = 1;
+        break;
+      }
+    }
+  }
+}
